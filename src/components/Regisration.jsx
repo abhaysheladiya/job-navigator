@@ -1,6 +1,18 @@
-import React from "react";
-
+import React, { useState } from 'react';
+import axios from 'axios'
 function Registration() {
+
+  const [name, setName]= useState()
+  const [email, setEmail]= useState()
+  const [password, setPassword]= useState()
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    axios.post('http://localhost:5000/register',{name, email, password})
+    .then(result => console.log(result))
+    .catch(err=> console.log(err))
+  }
+  
   return (
 
     <>
@@ -11,6 +23,7 @@ function Registration() {
         <form
           className="p-5 border rounded shadow bg-white"
           style={{ width: 400 }}
+          onSubmit={handleSubmit}
         >
           <h2 className="text-center mb-4">Register</h2>
           {/* Full Name */}
@@ -24,6 +37,7 @@ function Registration() {
               id="fullName"
               placeholder="Enter your full name"
               required=""
+              onChange={(e)=> setName(e.target.value)}
             />
           </div>
           {/* Email Address */}
@@ -37,6 +51,7 @@ function Registration() {
               id="email"
               placeholder="Enter your email"
               required=""
+              onChange={(e)=> setEmail(e.target.value)}
             />
           </div>
           {/* Password */}
@@ -50,6 +65,7 @@ function Registration() {
               id="password"
               placeholder="Enter your password"
               required=""
+              onChange={(e)=> setPassword(e.target.value)}
             />
           </div>
           {/* Confirm Password */}
