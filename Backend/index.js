@@ -4,10 +4,23 @@ const userModel =require('./models/users.js')
 const applicantModel =require('./models/applicant.js')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
+const multer =require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Ensure this folder exists
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+  },
+});
+const upload= multer({ storage });
 
 const app = express();
 app.use(express.json())
 app.use(cors())
+app.use(express.urlencoded({ extended: false }));
 
 
 mongoose.connect("mongodb://127.0.0.1:27017/jobNavigator");
@@ -49,6 +62,13 @@ app.post('/applyjob',(req,res) => {
     .then(users => res.json(job-navigator))
     .catch(err => res.json(err))
 })
+
+app.post("/upload", upload.single("resume"), (req, res)=>{
+    console.log(req. body);
+    console.log(req.file);
+
+    return res.redirect("/");
+});
 
 app.listen(5000, ()=>{
     console.log("app is running");
