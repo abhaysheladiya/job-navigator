@@ -8,6 +8,8 @@ import Login from "./components/Login.jsx";
 import Registration from "./components/Regisration.jsx";
 import About from "./components/About.jsx";
 import Applyjob from "./components/Applyjob.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,6 +21,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/registration" element={<Registration/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/applyjob" element={<Applyjob />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset_password/:id/:token" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
