@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 function Home() {
+
   const [goToApply, setGoToApply]=React.useState(false);
+
+  const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/jobs") // Fetch jobs from backend API
+      .then((res) => res.json())
+      .then((data) => setJobs(data))
+      .catch((err) => console.error("Error fetching jobs:", err));
+  }, []);
+
   if(goToApply){
     return <Navigate to="/applyjob"/>;
   }
@@ -10,64 +20,29 @@ function Home() {
   return (
     <>
       <h2>Find jobs</h2>
-
-      <div className="card text-center" style={{ width: "96rem" }}>
-        <div className="card-body text-center">
-          <h5 className="card-title">Blockchain</h5>
-          <p className="card-text">
-            Hiring blockchain developer.
-            You can findout all the openings of blockchain developer just cliking the button
-          </p>
-          <button onClick={()=>{
+      <div className="container mt-4">
+      {jobs.length > 0 ? (
+        jobs.map((job) => (
+          <div key={job._id} className="card text-center mb-3" style={{ width: "80rem" }}>
+            <div className="card-body text-center">
+              <h5 className="card-title">{job.title}</h5>
+              <p className="card-text">
+                Hiring at <strong>{job.company}</strong> in {job.location}. <br />
+                {job.description}
+              </p>
+              <button onClick={()=>{
             setGoToApply(true);
           }} className="btn btn-primary">
             {" "}
             Apply
           </button>
-        </div>
-
-        <div className="card-body text-center">
-          <h5 className="card-title">Cybersqure</h5>
-          <p className="card-text">
-            Hiring individuals expert in cyber-security developer.
-            more than five month of experience.You can findout all the openings of cybersecurity developer just cliking the button
-          </p>
-          <button onClick={()=>{
-            setGoToApply(true);
-          }} className="btn btn-primary">
-            {" "}
-            Apply
-          </button>
-        </div>
-
-        <div className="card-body text-center">
-          <h5 className="card-title">Backend</h5>
-          <p className="card-text">
-            Hiring backend developer.
-            You can findout all the openings of backend developer just cliking the button
-          </p>
-          <button onClick={()=>{
-            setGoToApply(true);
-          }} className="btn btn-primary">
-            {" "}
-            Apply
-          </button>
-        </div>
-        <div className="card-body text-center">
-          <h5 className="card-title">Frontend</h5>
-          <p className="card-text">
-            Hiring Frontend developer.
-            You can findout all the openings of Frontend developer just cliking the button
-          </p>
-          <button onClick={()=>{
-            setGoToApply(true);
-          }} className="btn btn-primary">
-            {" "}
-            Apply
-          </button>
-        </div>
-      </div>
-
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-center">No job postings available.</p>
+      )}
+    </div>
 
 
     </>
