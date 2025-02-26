@@ -6,6 +6,7 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 const jwt= require('jsonwebtoken')
 const nodemailer= require('nodemailer')
+const Job = require("./models/jobModel");
 
 const multer =require("multer");
 const path = require("path");
@@ -73,6 +74,62 @@ app.post("/upload", upload.single("resumeupload"), (req, res)=>{
 
     return res.redirect("/");
 });
+
+
+
+/* ---------------------- CREATE JOB APIs---------------------- */
+app.post("/jobs", async (req, res) => {
+    try {
+        const job = await Job.create(req.body);
+        res.status(201).json({ message: "Job created successfully", job });
+    } catch (error) {
+        res.status(500).json({ message: "Error creating job", error });
+    }
+});
+
+//GET ALL JOBS 
+app.get("/jobs", async (req, res) => {
+    try {
+        const jobs = await Job.find();
+        res.status(200).json(jobs);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching jobs", error });
+    }
+});
+
+// GET JOB BY ID
+app.get("/jobs/:id", async (req, res) => {
+    try {
+        const job = await Job.findById(req.params.id);
+        if (!job) return res.status(404).json({ message: "Job not found" });
+        res.status(200).json(job);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching job", error });
+    }
+});
+
+//UPDATE JOB
+app.put("/jobs/:id", async (req, res) => {
+    try {
+        const job = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!job) return res.status(404).json({ message: "Job not found" });
+        res.status(200).json({ message: "Job updated successfully", job });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating job", error });
+    }
+});
+
+//DELETE JOB 
+app.delete("/jobs/:id", async (req, res) => {
+    try {
+        const job = await Job.findByIdAndDelete(req.params.id);
+        if (!job) return res.status(404).json({ message: "Job not found" });
+        res.status(200).json({ message: "Job deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting job", error });
+    }
+});
+
 
 app.listen(5000, ()=>{
     console.log("app is running");
