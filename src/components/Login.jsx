@@ -17,7 +17,7 @@ const Login = () => {
         } else {
           // Display an error message based on the response data
           console.log(result.data);
-          alert("Register yourself first"); // or set error state to display it in the UI
+          alert("Invalid credentials"); // or set error state to display it in the UI
         }
       })
       .catch((err) => console.log(err));

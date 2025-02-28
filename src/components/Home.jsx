@@ -55,6 +55,49 @@ function Home() {
         </div>
       </div>
 
+
+      {/* Footer with Images */}
+      <div className="container mt-5">
+        <h4 className="text-center text-secondary">🌍 Explore Top Companies</h4>
+        <div className="row justify-content-center mt-3">
+          <div className="col-md-2 col-4">
+            <img
+              src="src/components/Images/google.png"
+              alt="Company 1"
+              className="img-fluid rounded shadow-sm"
+            />
+          </div>
+          <div className="col-md-2 col-4">
+            <img
+              src="src/components/Images/ibm.png"
+              alt="Company 2"
+              className="img-fluid rounded shadow-sm"
+            />
+          </div>
+          <div className="col-md-2 col-4">
+            <img
+              src="src/components/Images/infosys.png"
+              alt="Company 3"
+              className="img-fluid rounded shadow-sm"
+            />
+          </div>
+          <div className="col-md-2 col-4">
+            <img
+              src="src/components/Images/microsoft.png"
+              alt="Company 4"
+              className="img-fluid rounded shadow-sm"
+            />
+          </div>
+          <div className="col-md-2 col-4">
+            <img
+              src="src/components/Images/tcs.png"
+              alt="Company 5"
+              className="img-fluid rounded shadow-sm"
+            />
+          </div>
+        </div>
+      </div>
+
     </>
   );
 }
