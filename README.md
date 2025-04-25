@@ -23,3 +23,5 @@ Job Navigator is a full-stack job search and tracking application built with the
 
 ---
 
+## Prototype
+![image](https://github.com/user-attachments/assets/e85bae86-f614-4739-82e6-2d4811063fc6)
